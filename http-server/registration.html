@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="output.css">
+    <style>
+        input#name:invalid:focus {
+            border: 1px solid red;
+        }
+
+        input#email:invalid:focus {
+            border: 1px solid red;
+        }
+
+        input#dob:invalid:focus {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body class="flex justify-center align-middle bg-gray-50">
+    <div class="wrapper bg-white shadow-xl ring-1 rounded-sm w-80 pt-6">
+        <form id="user-form" class="w-80 h-40">
+            <h1 class="flex font-bold text-2xl justify-center align-middle">Registration Form</h1>
+
+            <label for="name" class="w-40 inline-block">Name</label>
+            <input type="text" class="w-40" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email" class="w-40 inline-block">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter email" required>
+
+            <label for="password" class="w-40 inline-block">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+            <label for="dob" class="w-40 inline-block">Date of Birth</label>
+            <input type="date" class=" w-80 inline-block" id="dob" name="dob" required>
+
+            <input type="checkbox" id="t&c" name="t&c">
+            <label for="t&c">Accept Terms & Conditions</label>
+
+            <button type="submit" class="bg-green-500 w-40 align-middle justify-center">Submit</button>
+        </form>
+    </div>
+
+    <div class=" flex relative bg-white px-6 mt-5 pb-8 pt-10 sm:mx-auto sm:px-10 sm:rounded-lg">
+        <div class="mx-auto">
+            <h2 class="flex font-bold text-2xl justify-center align-middle">Entries</h2>
+            <div id="user-entries" class="divide-y divide-gray-300/5">
+            </div>
+        </div>
+    </div>
+    <a href="/" class="text-blue-500 block mt-4 text-center">Back to Home</a>
+    <script src="./index.js"></script>
+</body>
+
+</html>
