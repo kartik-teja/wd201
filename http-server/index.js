@@ -32,11 +32,11 @@ const server = http.createServer((request, response) => {
   const url = request.url;
   response.writeHeader(200, { "Content-Type": "text/html" });
   switch (url) {
-    case "/project.html":
+    case "/project":
       response.write(projectContent);
       response.end();
       break;
-    case "/registration.html":
+    case "/registration":
       response.write(registrationContent);
       response.end();
       break;
