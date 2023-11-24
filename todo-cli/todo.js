@@ -51,9 +51,13 @@ const todoList = () => {
     for (let i = 0; i < list.length; i++) {
       let check = list[i].completed === true ? "x" : " ";
       if (today === list[i].dueDate) {
-        displayableList += `[${check}] ${list[i].title}\n`;
+        displayableList += `[${check}] ${list[i].title}`;
       } else {
-        displayableList += `[${check}] ${list[i].title} ${list[i].dueDate}\n`;
+        displayableList += `[${check}] ${list[i].title} ${list[i].dueDate}`;
+      }
+
+      if (i < list.length - 1) {
+        displayableList += "\n";
       }
     }
     return displayableList;
