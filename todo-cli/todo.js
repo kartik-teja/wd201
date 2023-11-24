@@ -47,15 +47,16 @@ const todoList = () => {
     // Format the To-Do list here, and return the output string
     // as per the format given above.
     let today = new Date().toISOString().split("T")[0];
+    let displayableList = "";
     for (let i = 0; i < list.length; i++) {
-      // Fixed typo: "lenght" to "length"
       let check = list[i].completed === true ? "x" : " ";
       if (today === list[i].dueDate) {
-        console.log(`[${check}] ${list[i].title}`);
+        displayableList += `[${check}] ${list[i].title}\n`;
       } else {
-        console.log(`[${check}] ${list[i].title} ${list[i].dueDate}`);
+        displayableList += `[${check}] ${list[i].title} ${list[i].dueDate}\n`;
       }
     }
+    return displayableList;
   };
   return {
     all,
