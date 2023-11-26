@@ -72,5 +72,4 @@ const todoList = () => {
     toDisplayableList,
   };
 };
-
-module.export = todoList;
+module.exports = todoList;
