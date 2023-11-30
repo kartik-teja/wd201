@@ -7,12 +7,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    /*static associate(models) {
       // define association here
-    }
+    }*/
+
     static async addTask(params) {
       return await Todo.create(params);
     }
+
     static async showList() {
       console.log("My Todo list \n");
 
@@ -26,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       // FILL IN HERE
       const dueTodaytask = await Todo.dueToday();
       dueTodaytask.forEach((task) => console.log(task.displayableString()));
+
       console.log("\n");
 
       console.log("Due Later");
@@ -33,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       const duetask = await Todo.dueLater();
       duetask.forEach((task) => console.log(task.displayableString()));
     }
+
     static async overdue() {
       // FILL IN HERE TO RETURN OVERDUE ITEMS
       return await Todo.findAll({
@@ -40,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [sequelize.Sequelize.Op.lt]: new Date(),
           },
-          completed: false,
         },
       });
     }
@@ -84,8 +87,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     displayableString() {
-      let checkbox = this.completed ? "[x]" : "[ ]";
-      return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
+      const checkbox = this.completed ? "[x]" : "[ ]";
+      if (!(this.dueDate === new Date())) {
+        return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
+      }
+      return `${this.id}. ${checkbox} ${this.title}`;
     }
   }
   Todo.init(
@@ -97,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Todo",
-    }
+    },
   );
   return Todo;
 };
