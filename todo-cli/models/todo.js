@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -39,10 +40,11 @@ module.exports = (sequelize, DataTypes) => {
 
     static async overdue() {
       // FILL IN HERE TO RETURN OVERDUE ITEMS
+      const { Sequelize } = require("sequelize");
       return await Todo.findAll({
         where: {
           dueDate: {
-            [sequelize.Sequelize.Op.lt]: new Date(),
+            [Sequelize.Op.lt]: new Date(),
           },
         },
       });
@@ -50,12 +52,13 @@ module.exports = (sequelize, DataTypes) => {
 
     static async dueToday() {
       // FILL IN HERE TO RETURN ITEMS DUE tODAY
+      const { Sequelize } = require("sequelize");
       const today = new Date();
 
       return await Todo.findAll({
         where: {
           dueDate: {
-            [sequelize.Sequelize.Op.gte]: today,
+            [Sequelize.Op.gte]: today,
           },
           completed: false,
         },
@@ -64,13 +67,14 @@ module.exports = (sequelize, DataTypes) => {
 
     static async dueLater() {
       // FILL IN HERE TO RETURN ITEMS DUE LATER
+      const { Sequelize } = require("sequelize");
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
 
       return await Todo.findAll({
         where: {
           dueDate: {
-            [sequelize.Sequelize.Op.gte]: tomorrow,
+            [Sequelize.Op.gte]: tomorrow,
           },
           completed: false,
         },
@@ -88,7 +92,8 @@ module.exports = (sequelize, DataTypes) => {
 
     displayableString() {
       const checkbox = this.completed ? "[x]" : "[ ]";
-      if (!(this.dueDate === new Date())) {
+
+      if (!(this.dueDate === new Date().toISOString().split("T")[0])) {
         return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
       }
       return `${this.id}. ${checkbox} ${this.title}`;
