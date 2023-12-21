@@ -10,31 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    static findAllTodos() {
-      const todos = this.findAll();
-      return todos;
-    }
 
     static addTodo({ title, dueDate }) {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
-    static async findByPK(id) {
-      const todo = await this.findOne({
-        where: {
-          id: id,
-        },
-      });
-      return todo;
-    }
-    static async destroy(id) {
-      const deleted = await this.destroy({
-        where: {
-          id: id,
-        },
-      });
-      return deleted;
-    }
     markAsCompleted() {
       return this.update({ completed: true });
     }
