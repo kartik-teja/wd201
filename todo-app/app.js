@@ -9,16 +9,20 @@ app.set("view engine", "ejs");
 
 // eslint-disable-next-line no-undef
 app.use(express.static(path.join(__dirname, "public")));
-app.get("/", function (request, response) {
+app.get("/", async function (request, response) {
   response.send("Hello World");
-});
-
-app.get("/todos", async function (_request, response) {
-  console.log("Processing list of all Todos ...");
-
   try {
     const todos = await Todo.findAll();
     return response.render("todo.ejs", { todos });
+  } catch (error) {
+    console.error(error);
+    return response.status(422).json(error);
+  }
+});
+app.get("/todos", async function (request, response) {
+  try {
+    const allTodos = await Todo.findAll();
+    response.json(allTodos); // Use response.json() to send JSON data
   } catch (error) {
     console.error(error);
     return response.status(422).json(error);
