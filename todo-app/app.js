@@ -12,7 +12,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", async function (request, response) {
   try {
     const todos = await Todo.findAll();
-    return response.render("todos.ejs", { todos });
+    console.log(todos);
+    return response.render("index.ejs", { todos });
   } catch (error) {
     console.error(error);
     return response.status(422).json(error);
