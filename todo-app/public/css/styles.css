@@ -1,5 +1,7 @@
 body{
-    background-color: black;
-    color : grey;
-    font-family :'Courier New', Courier, monospace;
+    background-color: greenyellow;
+}
+table{
+    width: 100%;
+    border: 2px black;
 }

@@ -10,10 +10,9 @@ app.set("view engine", "ejs");
 // eslint-disable-next-line no-undef
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", async function (request, response) {
-  response.send("Hello World");
   try {
     const todos = await Todo.findAll();
-    return response.render("todo.ejs", { todos });
+    return response.render("todos.ejs", { todos });
   } catch (error) {
     console.error(error);
     return response.status(422).json(error);

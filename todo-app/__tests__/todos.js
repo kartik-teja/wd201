@@ -73,5 +73,13 @@ describe("Todo Application", function () {
 
   test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
     // FILL IN YOUR CODE HERE
+    const initialTodos = await agent.get("/todos");
+    if (initialTodos.body.length > 0) {
+      const todoToDelete = initialTodos.body[0];
+      const response = await request(app).delete(`/todos/${todoToDelete.id}`);
+      expect(response.statusCode).toBe(200);
+      const updatedTodos = await db.Todo.getAllTodos();
+      expect(updatedTodos.length).toBe(initialTodos.body.length - 1);
+    }
   });
 });
