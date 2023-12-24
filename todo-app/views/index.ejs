@@ -4,13 +4,8 @@
         <link href="./css/styles.css" rel="stylesheet">
     </head>
     <body>
-        <%- include('header.ejs') %>
-        <table>
-            <% for( var i=0;i<allTodos.length;i++){%>
-            <tr>
-                <td><%=allTodos[i].title%></td>
-            </tr>
-        <}%>
-        </table>
+        <%- include('views/header.ejs') %>
+        <%- include('views/todo.ejs') %>
+        <%- include('views/footer.ejs') %>
     </body>
 </html>
