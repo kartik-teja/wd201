@@ -12,20 +12,20 @@
             <div class="col-start-2 col-span-4">
                 <%- include('header.ejs') %>
                 <form>
-                    <div class="flex">
+                    <div class="flex gap-2 py-4 leading-4">
                         <div class="flex-auto">
-                            <input type="text" placeholder="New Task" class="border border-grey-300 text-grey-900" required/>
+                            <input type="text" placeholder="New Task" class="border border-grey-300 rounded text-grey-900 w-full p-2 text-sm" required/>
                         </div>
                         <div class = "flex-auto">
-                            <input type="date"/>
+                            <input type="date" class="border border-grey-300 rounded text-grey-900 w-full p-2 text-sm"/>
                         </div>
                         <div class = "flex-none">
-                            <button type="submit">add</button>
+                            <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">add</button>
                         </div>
                     </div>               
                 </form>
                 <div>
-                    <h5>Overdue</h5>
+                    <h5>Overdue<span id="OverDueCount">0</span></h5>
                     <ul class = "list-none">
                         <li class="Todo-Item">
                             <div class="flex items-center w=fit my-2 px-2 py-2 rounded hover:bg-purple-50">
@@ -47,8 +47,8 @@
                         </li>
 
                     </ul>
-                    <h5>Due Today</h5>
-                    <h5>Due Later</h5>
+                    <h5>Due Today<span id="DueTodayCount">0</span></h5>
+                    <h5>Due Later<span id="DueLaterCount">0</span></h5>
                 </div>
             </div>
         </div>
