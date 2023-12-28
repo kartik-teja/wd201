@@ -62,14 +62,62 @@ describe("Todo Application", function () {
     res = await agent.get("/");
     csrfToken = extractCsrfToken(res);
 
-    const markCompleteResponse = await agent
-      .put(`/todos/${latestTodo.id}/markAsCompleted`)
+    const setCompletionStatusResponse = await agent
+      .put(`/todos/${latestTodo.id}`)
       .send({
         _csrf: csrfToken,
       });
-    const parsedUpdateResponse = JSON.parse(markCompleteResponse.text);
+    const parsedUpdateResponse = JSON.parse(setCompletionStatusResponse.text);
     expect(parsedUpdateResponse.completed).toBe(true);
   });
+
+  // test("Marks a todo with the given ID as Incomplete", async () => {
+  //   let res = await agent.get("/");
+  //   let csrfToken = extractCsrfToken(res);
+  //   await agent.post("/todos").send({
+  //     title: "flight",
+  //     dueDate: new Date().toISOString(),
+  //     completed: true,
+  //     _csrf: csrfToken,
+  //   });
+
+  //   const groupedTodosResponse = await agent
+  //     .get("/")
+  //     .set("Accept", "application/json");
+  //   const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text);
+  //   const dueTodayCount = parsedGroupedResponse.dueToday.length;
+  //   const latestTodo = parsedGroupedResponse.dueToday[dueTodayCount - 1];
+
+  //   res = await agent.get("/");
+  //   csrfToken = extractCsrfToken(res);
+
+  //   const setCompletionStatusResponse = await agent
+  //     .put(`/todos/${latestTodo.id}`)
+  //     .send({
+  //       _csrf: csrfToken,
+  //     });
+  //   const parsedUpdateResponse = JSON.parse(setCompletionStatusResponse.text);
+  //   console.log("Recieved", setCompletionStatusResponse.text);
+  //   expect(parsedUpdateResponse.completed).toBe(false);
+  // });
+
+  // test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
+  //   let res = await agent.get("/");
+  //   let csrfToken = extractCsrfToken(res);
+  //   const createResponse = await agent.post("/todos").send({
+  //     title: "trip",
+  //     dueDate: new Date().toISOString(),
+  //     completed: false,
+  //     _csrf: csrfToken,
+  //   });
+
+  //   const deleteResponse = await agent.delete(
+  //     `/todos/${createResponse.body.id}`
+  //   );
+
+  //   expect(deleteResponse.statusCode).toBe(200);
+  //   expect(deleteResponse.body).toBe(true);
+  // });
 
   // test("Fetches all todos in the database using /todos endpoint", async () => {
   //   await agent.post("/todos").send({
