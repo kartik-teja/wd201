@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const express = require("express");
 const app = express();
-var csrf = require("csurf");
+var csrf = require("tiny-csrf");
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
@@ -9,7 +10,7 @@ const todo = require("./models/todo");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("Using cookies"));
-app.use(csrf({ cookie: true }));
+app.use(csrf("1234qwertyuioplkjhgfdsazxcvbnm@#", ["POST", "PUT", "DELETE"]));
 
 app.set("view engine", "ejs");
 
