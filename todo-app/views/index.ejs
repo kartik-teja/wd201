@@ -9,39 +9,42 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             var token = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
-            function updateTodo(id){
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            function updateTodo(id) {
+                let dec=document.querySelector(`#todo-checkbox-${id}`).checked
                 fetch(`/todos/${id}`,{
-                    method: "put",
-                    headers: {"Content-Type":"application/json"},
+                    method:"put",
+                    headers:{"Content-Type": "application/json"},
                     body: JSON.stringify({
-                        "_csrf":token,
-                        completed: !document.getElementById(`todo-checkbox-${id}`).checked,
-                    }),
+                        _csrf:token,
+                        completed: dec
+                    })
                 })
                 .then((res)=>{
                     if(res.ok){
                         window.location.reload();
-                    }
+                    }   
+                    
                 })
-                .catch((err)=> console.error(err));
+                .catch((err)=>console.error(err));
             }
-            function deleteTodo(id){
+            function deleteTodo(id) {
                 fetch(`/todos/${id}`,{
                     method: "delete",
                     headers: {"Content-Type":"application/json"},
                     body: JSON.stringify({
-                        "_csrf":token
-                    }),
-                })
-                .then((res)=>{
-                    if(res.ok){
+                        "_csrf": token,
+                    })
+            })
+                    .then((res) => {
+                    if (res.ok) {
                         window.location.reload();
                     }
                 })
-                .catch((err)=> console.error(err));
-            }
+                    .catch((err) => console.error(err));
+                }
+        </script>
         </script>
 
     </head>
@@ -64,10 +67,10 @@
                     </div>               
                 </form>
                 <div>
-                    <%- include('todos.ejs',{title:"Overdue",data:overDue}) %>
-                    <%- include('todos.ejs',{title:"Due Today",data:dueToday}) %>
-                    <%- include('todos.ejs',{title:"Due Later",data:dueLater}) %>
-                    <%- include('todos.ejs',{title:"Completed Items",data:completedItems}) %>
+                    <%- include('todos.ejs',{title:"Overdue",data:overDue,id:"count-overdue"}) %>
+                    <%- include('todos.ejs',{title:"Due Today",data:dueToday,id:"count-due-today"}) %>
+                    <%- include('todos.ejs',{title:"Due Later",data:dueLater,id:"count-due-later"}) %>
+                    <%- include('todos.ejs',{title:"Completed Items",data:completedItems,id:"count-completed"}) %>
                 </div>
             </div>
         </div>
