@@ -6,7 +6,6 @@ const { Todo, User } = require("./models");
 const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 const path = require("path");
-const todo = require("./models/todo");
 
 const passport = require("passport");
 const connectEnsureLogin = require("connect-ensure-login");
@@ -145,7 +144,14 @@ app.post("/users", async (request, response) => {
       response.redirect("/");
     });
   } catch (error) {
-    console.log(error);
+    if (error.name === "SequelizeValidationError") {
+      const errorMessages = error.errors.map((e) => e.message);
+      request.flash("error", errorMessages);
+      response.redirect("/signup");
+    } else {
+      console.log(error);
+      response.status(500).json(error);
+    }
   }
 });
 
@@ -166,7 +172,7 @@ app.post(
   "/session",
   passport.authenticate("local", {
     failureRedirect: "/login",
-    failureFlash: true,
+    failureFlash: "Invalid email or password. Please try again.",
   }),
   function (request, response) {
     console.log(request.user);
@@ -179,6 +185,13 @@ app.post(
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
     try {
+      if (!request.body.title || !request.body.dueDate) {
+        request.flash(
+          "error",
+          "Validation error: Please provide a valid title and due date."
+        );
+        return response.redirect("/todos");
+      }
       await Todo.addTodo({
         title: request.body.title,
         dueDate: request.body.dueDate,
@@ -187,6 +200,7 @@ app.post(
       return response.redirect("/todos");
     } catch (error) {
       console.log(error);
+      request.flash("error", "An error occurred while adding a todo.");
       return response.status(422).json(error);
     }
   }

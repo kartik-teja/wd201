@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         userId,
       });
     }
-    static getAllTodos(userId) {
+    static getAllTodos() {
       return this.findAll();
     }
     static async dueLater() {
@@ -68,10 +68,11 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static async remove(id) {
+    static async remove(id, userId) {
       return this.destroy({
         where: {
           id,
+          userId,
         },
       });
     }
