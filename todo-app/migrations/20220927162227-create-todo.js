@@ -11,6 +11,11 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          len: [5, undefined],
+        },
       },
       dueDate: {
         type: Sequelize.DATEONLY,
