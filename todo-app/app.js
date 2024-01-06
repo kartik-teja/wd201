@@ -47,10 +47,6 @@ app.use(function (request, response, next) {
   next();
 });
 
-app.get("/", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
-  response.redirect("/todos");
-});
-
 passport.use(
   new LocalStratergy(
     {
@@ -92,6 +88,9 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get("/", async (request, response) => {
+  if (request.isAuthenticated()) {
+    return response.redirect("/todos");
+  }
   response.render("index", {
     csrfToken: request.csrfToken(),
   });
