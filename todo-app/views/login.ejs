@@ -4,9 +4,9 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale-1.0"/>
         <meta name="csrf-token" content="<%=csrfToken%>"/>
-        <title><%= title%></title>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Login</title>
         <link href="./css/styles.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
         <div class="gird grid-cols-6">
@@ -18,11 +18,11 @@
                     <div class="py-3">
                     <div class="py-3">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" class="border border-grey-300 text-grey-900 rounded p-2 w-full">
+                    <input type="email" name="email" class="border border-grey-300 text-grey-900 rounded p-2 w-full" required>
                     </div>
                     <div class="py-3">
                     <label for="password">Password:</label>
-                    <input type="password" name="password" class="border border-grey-300 text-grey-900 rounded p-2 w-full">
+                    <input type="password" name="password" class="border border-grey-300 text-grey-900 rounded p-2 w-full" required>
                     </div>
                     <div class="py-3">
                     <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Sign in</button>

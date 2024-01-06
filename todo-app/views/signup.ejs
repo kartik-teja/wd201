@@ -4,7 +4,7 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale-1.0"/>
         <meta name="csrf-token" content="<%=csrfToken%>"/>
-        <title><%= title%></title>
+        <title>Sign Up</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="./css/styles.css" rel="stylesheet">
     </head>
@@ -17,23 +17,24 @@
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="py-3">
                     <label for="firstName">First Name:</label>
-                    <input type="text" name="firstName" class="border border-grey-300 text-grey-900 rounded p-2 w-full">
+                    <input type="text" name="firstName" id = "firstName" class="border border-grey-300 text-grey-900 rounded p-2 w-full" required>
                     </div>
                     <div class="py-3">
                     <label for="lastName">Last Name:</label>
-                    <input type="text" name="lastName" class="border border-grey-300 text-grey-900 rounded p-2 w-full">
+                    <input type="text" name="lastName" id="lastName" class="border border-grey-300 text-grey-900 rounded p-2 w-full" required>
                     </div>
                     <div class="py-3">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" class="border border-grey-300 text-grey-900 rounded p-2 w-full">
+                    <input type="email" name="email" id="emali" class="border border-grey-300 text-grey-900 rounded p-2 w-full" required>
                     </div>
                     <div class="py-3">
                     <label for="password">Password:</label>
-                    <input type="password" name="password" class="border border-grey-300 text-grey-900 rounded p-2 w-full">
+                    <input type="password" name="password" id="password" class="border border-grey-300 text-grey-900 rounded p-2 w-full" required>
                     </div>
                     <div class="py-3">
                     <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Sign up</button>
                     </div>
+                    
                 </form>
             </div>
         </div>

@@ -42,6 +42,10 @@
                 })
                 .catch((err)=> console.error(err));
             }
+            const logoutbtn = document.getElementById("logoutbtn")
+            const logout = ()=>{
+                window.location.href = '/signout'
+            }
         </script>
 
     </head>
@@ -49,9 +53,9 @@
         <div class="gird grid-cols-6">
             <div class="col-start-2 col-span-4">
                 <%- include('header.ejs') %>
-                <a href="/signout">Signout</a> 
-               <form action="/todos" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken%>"/>
+                <button id="logoutbtn" class="m-5 p-2 rounded text-white bg-red-600" onclick="logout()" >signout</button> 
+                <form action="/todos" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="flex gap-2 py-4 leading-4">
                         <div class="flex-auto">
                             <input type="text" name="title" placeholder="New Task" class="border border-grey-300 rounded text-grey-900 w-full p-2 text-sm" required/>
@@ -59,7 +63,6 @@
                         <div class = "flex-auto">
                             <input type="date" name="dueDate" class="border border-grey-300 rounded text-grey-900 w-full p-2 text-sm" required/>
                         </div>
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <div class = "flex-none">
                             <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">add</button>
                         </div>

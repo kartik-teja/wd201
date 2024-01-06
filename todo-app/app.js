@@ -19,7 +19,6 @@ const saltRounds = 10;
 
 app.use(bodyParser.json());
 app.use(flash());
-
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("Using cookies"));
 app.use(csrf("1234qwertyuioplkjhgfdsazxcvbnm@#", ["POST", "PUT", "DELETE"]));
@@ -27,11 +26,14 @@ app.use(csrf("1234qwertyuioplkjhgfdsazxcvbnm@#", ["POST", "PUT", "DELETE"]));
 app.set("view engine", "ejs");
 
 // eslint-disable-next-line no-undef
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   session({
     secret: "This-is-a-super-secret-key-753698456321458",
+    resave: false,
+    saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
     },
@@ -61,8 +63,10 @@ passport.use(
             return done(null, false, { message: "Invalid password" });
           }
         })
-        .catch((err) => {
-          return done(err);
+        .catch(() => {
+          return done(null, false, {
+            message: "Account doesn't exist",
+          });
         });
     }
   )
@@ -85,8 +89,6 @@ passport.deserializeUser((id, done) => {
 
 app.get("/", async (request, response) => {
   response.render("index", {
-    title: "Todo application",
-
     csrfToken: request.csrfToken(),
   });
 });
@@ -121,13 +123,26 @@ app.get(
 );
 
 app.get("/signup", (request, response) => {
-  response.render("signup", {
-    title: "Sign Up",
-    csrfToken: request.csrfToken(),
-  });
+  if (request.accepts("html")) {
+    return response.render("signup", {
+      csrfToken: request.csrfToken(),
+    });
+  }
 });
 
 app.post("/users", async (request, response) => {
+  if (request.body.email.length === 0) {
+    request.flash("error", "Please enter email");
+    return response.redirect("/signup");
+  }
+  if (request.body.firstName.length === 0) {
+    request.flash("error", "Please enter name");
+    return response.redirect("/signup");
+  }
+  if (request.body.password.length < 8) {
+    request.flash("error", "Password length should be >= 8 characters");
+    return response.redirect("/signup");
+  }
   const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
   console.log(hashedPwd);
   try {
@@ -156,7 +171,12 @@ app.post("/users", async (request, response) => {
 });
 
 app.get("/login", (request, response) => {
-  response.render("login", { title: "Login", csrfToken: request.csrfToken() });
+  if (request.accepts("html")) {
+    return response.render("login", {
+      title: "Login",
+      csrfToken: request.csrfToken(),
+    });
+  }
 });
 
 app.get("/signout", (request, response, next) => {
@@ -184,6 +204,8 @@ app.post(
   "/todos",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
+    const receivedCsrfToken = request.body.csrfToken; // Adjust this based on your form submission method
+    console.log("Received CSRF Token:", receivedCsrfToken);
     try {
       if (!request.body.title || !request.body.dueDate) {
         request.flash(
