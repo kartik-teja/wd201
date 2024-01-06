@@ -47,6 +47,10 @@ app.use(function (request, response, next) {
   next();
 });
 
+app.get("/", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
+  response.redirect("/todos");
+});
+
 passport.use(
   new LocalStratergy(
     {
@@ -98,6 +102,7 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const logedInUser = request.user.id;
+
     const overDue = await Todo.overDue(logedInUser);
     const dueToday = await Todo.dueToday(logedInUser);
     const dueLater = await Todo.dueLater(logedInUser);
